@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "508554396536",
+    "firebase_url": "https://dz-store-e2cc6.firebaseio.com",
+    "project_id": "dz-store-e2cc6",
+    "storage_bucket": "dz-store-e2cc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508554396536:android:54b95e3275cece5d49be8d",
+        "android_client_info": {
+          "package_name": "com.mohie.dzstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508554396536-vjn1kaolbrta57libv2hurp4esgc1rjl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbIksLmiLWm6hsQ7PhuZBLMzl0zs1pQv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508554396536-vjn1kaolbrta57libv2hurp4esgc1rjl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
