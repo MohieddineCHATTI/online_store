@@ -4,6 +4,11 @@ import 'package:dzstore/screens/loading.dart';
 
 
 class SignIn extends StatefulWidget {
+
+  final Function toggleAuthenticateScreen;
+
+  SignIn({this.toggleAuthenticateScreen});
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -21,6 +26,18 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return loading == true? Loading() : MaterialApp(
       home: Scaffold(
+          appBar: AppBar(
+            title: Text("Sign in"),
+            actions: <Widget>[
+              FlatButton.icon(
+                icon: Icon(Icons.person,),
+                label: Text("Register"),
+                onPressed: () {
+                  widget.toggleAuthenticateScreen();
+                },
+              )
+            ],
+          ),
           body: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

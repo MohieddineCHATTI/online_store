@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:dzstore/services/auth.dart';
+import 'package:dzstore/screens/loading.dart';
 
 
 class Register extends StatefulWidget {
+
+  final Function toggleAuthenticateScreen;
+
+  Register({this.toggleAuthenticateScreen});
+
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -13,11 +19,25 @@ class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
   String email;
   String password;
+  String error = " ";
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return loading == true ? Loading() : MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("Sign up"),
+          actions: <Widget>[
+            FlatButton.icon(
+              icon: Icon(Icons.person,),
+              label: Text("Sign in"),
+              onPressed: () {
+              widget.toggleAuthenticateScreen();
+              },
+            )
+          ],
+        ),
         body: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,14 +80,20 @@ class _RegisterState extends State<Register> {
                         onPressed: () async {
                           if (_formkey.currentState.validate()){
                             dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+                            if (result == null){
+                              setState(() {
+                                error = "Either email or password is incorrect, try again please";
+                              });
+                            }else{
                             print("successfully signed up");
-                            print(result.uid);
+                            print(result);
                             return result;
-                          }
+                          }}
 
                         },
                         child: Text("Sign up"),
-                      )
+                      ),
+                      Text(error),
                     ],
 
                   ),

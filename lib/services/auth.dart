@@ -64,6 +64,7 @@ try{
 }
  catch(e){
   print(e.toString());
+  return e.toString();
 
  }
   }
