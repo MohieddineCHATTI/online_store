@@ -89,9 +89,6 @@ class _SignInState extends State<SignIn> {
                         RaisedButton(
                           onPressed: () async {
                             if (_formkey.currentState.validate()){
-                              setState(() {
-                                loading = true;
-                              });
                               dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                               print("successfully signed In");
                               print(result.uid);

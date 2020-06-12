@@ -67,7 +67,7 @@ class _RegisterState extends State<Register> {
                         decoration: InputDecoration(
                           hintText: "Set Your Password ...",
                         ),
-                        validator: (val) => val.length < 8 ? "please enter at least six characters long password ": null,
+                        validator: (val) => val.length < 8 ? "please enter at least eight characters long password ": null,
                         onChanged: (val){
                           setState(() {
                             password = val;
