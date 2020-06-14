@@ -16,9 +16,6 @@ class _ItemsState extends State<Items> {
   @override
   Widget build(BuildContext context) {
     final items = Provider.of<List<ItemModel>>(context) ?? [];
-    items.forEach((item) {
-      print (item.name);
-    });
 
     return ListView.builder(
         itemCount: items.length,

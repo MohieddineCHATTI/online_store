@@ -17,23 +17,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthService _auth = AuthService();
-  final FirebaseAuth auth = FirebaseAuth.instance;
+
+  ////////final FirebaseAuth auth = FirebaseAuth.instance;
   String name;
   String uid;
   FirebaseUser user;
 
-//  Future getCurrentUser() async {
-//    final
-//    print("current user   " + user.uid);
-////    final uid = user.uid.toString();
-//
-//  }
-
-  final DatabaseService database = DatabaseService();
+ //////// final DatabaseService database = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
     void _showAddNewPanel (){
+      //isScroll Controlled for bottom sheet full height ,, must be another way
       showModalBottomSheet(context: context,isScrollControlled: true,  builder: (context)  {
         return Container(
           margin: EdgeInsets.all(30),

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dzstore/services/database.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddNewItem extends StatefulWidget {
   @override
@@ -13,6 +16,28 @@ class _AddNewItemState extends State<AddNewItem> {
   double  _price;
   String _description;
 
+  File _image1;
+  File _image2;
+  File _image3;
+  Future getImg1() async {
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image1 = image;
+      print(_image1.path);
+    });
+  }
+  Future getImg2() async {
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image2 = image;
+    });
+  }
+  Future getImg3() async {
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image3 = image;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<FirebaseUser>(context);
@@ -71,6 +96,43 @@ class _AddNewItemState extends State<AddNewItem> {
                     _description = val;
                   });
                 },
+              ),
+              SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+//
+                  _image1 == null ? CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.pink,
+                      child: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: getImg1
+                      )): Container(
+                      width: MediaQuery.of(context).size.width/4,
+                    height: MediaQuery.of(context).size.height/4,
+                    child: Image.file(_image1,)),
+                  _image2 == null ? CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.pink,
+                      child: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: getImg2
+                      )): Container(
+                      width: MediaQuery.of(context).size.width/4,
+                      height: MediaQuery.of(context).size.height/4,
+                      child: Image.file(_image2,)),
+                  _image3 == null ? CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.pink,
+                      child: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: getImg3
+                      )): Container(
+                      width: MediaQuery.of(context).size.width/4,
+                      height: MediaQuery.of(context).size.height/4,
+                      child: Image.file(_image3,))
+                ],
               ),
 
               FlatButton.icon(onPressed: () async {
