@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'addNewItem.dart';
 import 'package:dzstore/screens/home/items.dart';
-
+import 'package:dzstore/services/getUsername.dart';
 class HomePage extends StatefulWidget {
 
   @override
@@ -17,13 +17,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthService _auth = AuthService();
+ String username;
+ String  uid;
 
-  ////////final FirebaseAuth auth = FirebaseAuth.instance;
-  String name;
-  String uid;
-  FirebaseUser user;
 
- //////// final DatabaseService database = DatabaseService();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,23 @@ class _HomePageState extends State<HomePage> {
         );
       });
     }
-
+    void _logout (){
+      //isScroll Controlled for bottom sheet full height ,, must be another way
+      showModalBottomSheet(context: context,  builder: (context)  {
+        return Container(
+            child: Center(
+              child: Column(
+                children: <Widget>[
+                  FlatButton(onPressed: (){
+                    _auth.logOut();
+                  Navigator.of(context).pop();},child: Text("logout"),color: Colors.pink,),
+                  FlatButton(onPressed: (){Navigator.of(context).pop();},child: Text("Cancel"),color: Colors.yellow,)
+                ],
+              ),
+            )
+        );
+      });
+    }
     return StreamProvider<List<ItemModel>>.value(
       value: DatabaseService().items,
       child: MaterialApp(
@@ -45,8 +58,9 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: Text("Home"),
             actions: <Widget>[
-              FlatButton.icon(onPressed: () =>_showAddNewPanel(), icon: Icon(Icons.add), label: Text("add")),
-              FlatButton.icon(onPressed:(){ _auth.logOut();}, icon: Icon(Icons.person), label: Text("Logout")),
+              FlatButton.icon(onPressed: () =>_showAddNewPanel(), icon: Icon(Icons.add), label: Text("")),
+              FlatButton.icon(onPressed: () {_logout();} , icon: Icon(Icons.account_circle), label: GetUser(),),
+
             ],
           ),
           body: Items(),

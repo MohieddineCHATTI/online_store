@@ -37,6 +37,8 @@ dev_dependencies:
   flutter_spinkit: ^4.1.2+1
   cloud_firestore: ^0.13.6
   image_picker: ^0.6.7+1
+  firebase_storage: ^3.1.6
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

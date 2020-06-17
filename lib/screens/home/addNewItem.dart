@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dzstore/services/database.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
 
 class AddNewItem extends StatefulWidget {
   @override
@@ -15,6 +17,10 @@ class _AddNewItemState extends State<AddNewItem> {
   String _prodName;
   double  _price;
   String _description;
+  String url1;
+  String url2;
+  String url3;
+
 
   File _image1;
   File _image2;
@@ -37,6 +43,34 @@ class _AddNewItemState extends State<AddNewItem> {
     setState(() {
       _image3 = image;
     });
+  }
+
+  Future uploader (String image1 , File imageFile1,String image2 , File imageFile2,String image3 , File imageFile3,  ) async {
+//
+    StorageReference firebaseStorageRef1 = FirebaseStorage.instance.ref().child(image1);
+    StorageUploadTask uploadTask1 =  firebaseStorageRef1.putFile(imageFile1);
+    dynamic _url1 = await firebaseStorageRef1.getDownloadURL();
+      setState(() {
+       url1 = _url1;
+       print(url1);
+      });
+    StorageReference firebaseStorageRef2 = FirebaseStorage.instance.ref().child(image2);
+    StorageUploadTask uploadTask2 =  firebaseStorageRef1.putFile(imageFile2);
+    dynamic _url2 = await firebaseStorageRef2.getDownloadURL();
+    setState(() {
+      url2 = _url2;
+      print(url2);
+    });
+    StorageReference firebaseStorageRef3 = FirebaseStorage.instance.ref().child(image3);
+    StorageUploadTask uploadTask3 =  firebaseStorageRef1.putFile(imageFile3);
+    dynamic _url3 = await firebaseStorageRef3.getDownloadURL();
+    setState(() {
+      url3 = _url3;
+      print(url3);
+    });
+    StorageTaskSnapshot storageTaskSnapshot1 = await uploadTask1.onComplete;
+    StorageTaskSnapshot storageTaskSnapshot2 = await uploadTask2.onComplete;
+    StorageTaskSnapshot storageTaskSnapshot3 = await uploadTask3.onComplete;
   }
   @override
   Widget build(BuildContext context) {
@@ -138,9 +172,14 @@ class _AddNewItemState extends State<AddNewItem> {
               FlatButton.icon(onPressed: () async {
 //                print(_name +_prodName + _description);
 //                print(_price);
-              print(_name);
-              await DatabaseService().updateUserCollection(_name, _prodName ?? "no name", _description ?? "no description here", _price ?? 0 );
+                await uploader("image1", _image1, "image2", _image2, "image3", _image3);
+
+                print(url1);
+                print(url2);
+                print(url3);
+              await DatabaseService().updateUserCollection(_name, _prodName ?? "no name", _description ?? "no description here", _price ?? 0 , url1 ?? "no url", url2 ?? "no url", url3 ?? "no url");
               }, icon: Icon(Icons.add), label: Text(""),)
+
 
             ],
           ),

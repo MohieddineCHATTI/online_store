@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dzstore/services/auth.dart';
 import 'package:dzstore/screens/loading.dart';
+import 'package:dzstore/services/database.dart';
 
 
 class Register extends StatefulWidget {
@@ -16,11 +17,14 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final AuthService _auth = AuthService();
+  final DatabaseService databaseService = DatabaseService();
   final _formkey = GlobalKey<FormState>();
   String email;
   String password;
+  String name;
   String error = " ";
   bool loading = false;
+  String uid = "uid test";
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +54,17 @@ class _RegisterState extends State<Register> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 10,),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          hintText: "Enter Your username please...",
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            name = val;
+                          });
+                        },
+                        validator: (val) => val.length <4 ? "username must be at least 4 characters long" : null,
+                      ),
                       TextFormField(
                         decoration: InputDecoration(
                           hintText: "Enter Your Email ...",
@@ -85,8 +100,12 @@ class _RegisterState extends State<Register> {
                                 error = "Either email or password is incorrect, try again please";
                               });
                             }else{
+                              setState(() {
+                                uid = result.uid;
+                              });
                             print("successfully signed up");
-                            print(result);
+                            databaseService.updateUsersCollection(name, uid);
+                            print(uid);
                             return result;
                           }}
 
